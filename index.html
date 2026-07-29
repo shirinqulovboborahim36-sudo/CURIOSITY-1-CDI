@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curiosity — IELTS Reading Practice Tests</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root{
+    --ink:#181a2a;
+    --muted:#686e85;
+    --faint:#9498ac;
+    --bg1:#eef1fc;
+    --bg2:#f7f3fb;
+    --card:#ffffff;
+    --line:#e7e8f4;
+    --indigo:#4338ca;
+    --indigo-soft:#eceafe;
+    --pink:#ec4899;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:linear-gradient(160deg,var(--bg1) 0%, var(--bg2) 55%, #f8f5fb 100%);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .blob{position:fixed; border-radius:50%; filter:blur(70px); opacity:.35; z-index:0; pointer-events:none;}
+  .blob.b1{width:420px;height:420px; top:-160px; right:-120px; background:radial-gradient(circle,#c7c2ff, transparent 70%);}
+  .blob.b2{width:360px;height:360px; top:120px; left:-160px; background:radial-gradient(circle,#ffd0ea, transparent 70%);}
+
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px;position:relative;z-index:1;}
+
+  .top-strip{display:flex; align-items:center; gap:14px; padding:20px 0 0; flex-wrap:wrap;}
+  .strip-spacer{flex:1; min-width:0;}
+  .eyebrow{
+    flex:2; min-width:0; text-align:center;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-weight:800; font-size:clamp(26px,4vw,40px);
+    letter-spacing:1px; line-height:1;
+    background:linear-gradient(120deg,var(--indigo) 0%, var(--pink) 55%, var(--indigo) 100%);
+    background-size:200% auto; -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-transform:uppercase; animation:shine 5s linear infinite;
+    filter:drop-shadow(0 2px 10px rgba(67,56,202,0.25));
+  }
+  @keyframes shine{ to{background-position:200% center;} }
+  .profile-pill{
+    display:flex; align-items:center; gap:12px;
+    background:var(--card); border:1px solid var(--line); border-radius:999px;
+    padding:9px 16px 9px 9px; text-decoration:none; color:var(--ink);
+    box-shadow:0 6px 20px rgba(60,50,120,0.08);
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    flex:1; min-width:260px; max-width:400px;
+  }
+  .profile-pill:hover{transform:translateY(-2px); box-shadow:0 12px 28px rgba(60,50,120,0.14); border-color:var(--indigo-soft);}
+  .avatar{position:relative; width:46px;height:46px;border-radius:50%; background:conic-gradient(from 200deg, var(--indigo), var(--pink), var(--indigo)); padding:2.5px; flex-shrink:0;}
+  .avatar .inner{width:100%;height:100%;border-radius:50%; background:var(--ink); display:flex;align-items:center;justify-content:center; color:#fff;font-size:17px;}
+  .avatar .badge{position:absolute; top:-4px; right:-4px; width:19px;height:19px;border-radius:50%; background:var(--indigo); color:#fff; font-size:10.5px; font-weight:700; display:flex;align-items:center;justify-content:center; border:2px solid #ffffff; font-family:'Plus Jakarta Sans',sans-serif;}
+  .profile-pill .stack{display:flex;flex-direction:column;line-height:1.22; flex:1;}
+  .profile-pill .stack .name{font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:15.5px; letter-spacing:0.1px; color:var(--ink);}
+  .profile-pill .stack .handle{font-size:12.5px; color:var(--muted); font-weight:500;}
+  .tg-btn{width:38px;height:38px;border-radius:50%; background:linear-gradient(135deg,#34b3f1,#1e90da); display:flex;align-items:center;justify-content:center; color:#fff;font-size:15px; text-decoration:none; box-shadow:0 6px 16px rgba(30,144,218,0.4); flex-shrink:0; animation:pulseRing 2.6s ease-in-out infinite;}
+  @keyframes pulseRing{0%,100%{box-shadow:0 6px 16px rgba(30,144,218,0.4), 0 0 0 0 rgba(30,144,218,0.4);} 50%{box-shadow:0 6px 16px rgba(30,144,218,0.4), 0 0 0 8px rgba(30,144,218,0);}}
+
+  h1{font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:clamp(26px,4.2vw,38px); margin:22px 0 8px; letter-spacing:-0.5px;}
+  .sub{color:var(--muted); font-size:15px; max-width:62ch; margin:0 0 22px;}
+
+  .controls{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:8px;}
+  .search-box{position:relative; flex:1; min-width:230px;}
+  .search-box i{position:absolute; left:18px; top:50%; transform:translateY(-50%); color:var(--faint); font-size:14px;}
+  .search-box input{width:100%; padding:15px 18px 15px 44px; border-radius:999px; border:1px solid var(--line); background:var(--card); font-size:14.5px; color:var(--ink); outline:none; box-shadow:0 4px 14px rgba(70,60,140,0.05); transition:border-color .15s ease, box-shadow .15s ease;}
+  .search-box input:focus{border-color:var(--indigo); box-shadow:0 0 0 4px var(--indigo-soft);}
+
+  .surprise-btn{display:flex;align-items:center;gap:8px; padding:0 20px; border-radius:999px; background:var(--card); border:1px solid var(--line); color:var(--indigo); font-weight:700; font-size:14px; cursor:pointer; box-shadow:0 4px 14px rgba(70,60,140,0.05); transition:transform .15s ease, background .15s ease, color .15s ease; white-space:nowrap;}
+  .surprise-btn:hover{background:var(--indigo); color:#fff; transform:translateY(-1px);}
+
+  .count-row{display:flex;align-items:center;justify-content:space-between; margin:16px 0 22px;}
+  .count-badge{font-size:13px; color:var(--faint); font-weight:500;}
+  .count-badge b{color:var(--ink);}
+
+  main{padding-bottom:70px;}
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:600px){
+    .grid{grid-template-columns:1fr;}
+    .eyebrow{order:3; flex:1 1 100%; text-align:left; font-size:28px; margin-top:6px;}
+  }
+
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px 20px 18px; text-decoration:none; color:var(--ink);
+    display:flex; flex-direction:column; gap:12px; position:relative;
+    box-shadow:0 3px 10px rgba(60,50,120,0.04);
+    transition:transform .18s ease, box-shadow .22s ease, border-color .18s ease;
+  }
+  .card:hover{transform:translateY(-4px); border-color:transparent; box-shadow:0 16px 32px -8px var(--glow, rgba(67,56,202,0.28));}
+  .card-top{display:flex; align-items:flex-start; justify-content:space-between;}
+  .tag{font-size:11.5px; font-weight:700; color:var(--indigo); background:var(--indigo-soft); padding:5px 11px; border-radius:999px; letter-spacing:0.3px;}
+  .icon-badge{width:34px;height:34px;border-radius:11px; display:flex;align-items:center;justify-content:center; font-size:14.5px; flex-shrink:0; transition:transform .25s ease;}
+  .card:hover .icon-badge{transform:rotate(-8deg) scale(1.08);}
+  .card h3{font-family:'Plus Jakarta Sans',sans-serif; font-size:16.5px; font-weight:700; margin:2px 0 0; line-height:1.32;}
+  .card p{font-size:13px; color:var(--muted); margin:0; flex-grow:1;}
+  .meta{display:flex; gap:16px; font-size:12px; color:var(--faint);}
+  .meta span{display:flex;align-items:center;gap:5px;}
+  .go{font-size:13px; font-weight:700; color:var(--indigo); display:flex; align-items:center; gap:6px;}
+  .go i{font-size:11px; transition:transform .18s ease;}
+  .card:hover .go i{transform:translateX(4px);}
+  .card.is-hidden{display:none;}
+
+  .empty{text-align:center; padding:60px 20px; color:var(--faint); font-size:14.5px; display:none;}
+  .empty.is-visible{display:block;}
+  .empty i{font-size:26px; color:var(--indigo); display:block; margin-bottom:12px;}
+
+  footer{border-top:1px solid var(--line); padding:22px 0 44px; text-align:center; font-size:12.5px; color:var(--faint);}
+  footer a{color:var(--indigo); text-decoration:none; font-weight:700;}
+
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important;} }
+</style>
+</head>
+<body>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="wrap">
+    <div class="top-strip">
+      <a class="profile-pill" href="https://t.me/IELTSWITHSPAXCE" target="_blank" rel="noopener">
+        <div class="avatar">
+          <div class="inner"><i class="fa-solid fa-book-open"></i></div>
+          <div class="badge">24</div>
+        </div>
+        <span class="stack">
+          <span class="name">IELTS Reading</span>
+          <span class="handle">@IELTSWITHSPAXCE</span>
+        </span>
+        <span class="tg-btn"><i class="fa-solid fa-paper-plane"></i></span>
+      </a>
+      <span class="eyebrow">CURIOSITY 1.0</span>
+      <span class="strip-spacer"></span>
+    </div>
+
+    <h1>IELTS Academic Reading — Practice Tests</h1>
+    <p class="sub">Pick any passage below to start. Every test is timed, self-scoring, and gives you a full explanation with evidence from the passage after you submit.</p>
+
+    <div class="controls">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="search" type="text" placeholder="Search by test number or topic…" autocomplete="off">
+      </div>
+      <button class="surprise-btn" id="surprise" type="button"><i class="fa-solid fa-shuffle"></i> Surprise me</button>
+    </div>
+    <div class="count-row">
+      <span class="count-badge"><b id="count">24</b> tests found</span>
+    </div>
+
+    <main>
+      <div class="grid" id="grid">
+
+        <a class="card" data-title="the history of pencil test 1" href="TEST%201%20HISTORY%20OF%20PENCIL.html" target="_blank" rel="noopener" style="--glow:rgba(217,119,6,0.28)">
+          <div class="card-top"><span class="tag">TEST 1</span><span class="icon-badge" style="background:rgba(217,119,6,0.13); color:#d97706;"><i class="fa-solid fa-pencil"></i></span></div>
+          <h3>The History of Pencil</h3>
+          <p>An IELTS Academic Reading passage exploring the history of pencil.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of tea test 2" href="TEST%202%20HISTORY%20OF%20TEA.html" target="_blank" rel="noopener" style="--glow:rgba(22,163,74,0.28)">
+          <div class="card-top"><span class="tag">TEST 2</span><span class="icon-badge" style="background:rgba(22,163,74,0.13); color:#16a34a;"><i class="fa-solid fa-mug-hot"></i></span></div>
+          <h3>The History of Tea</h3>
+          <p>An IELTS Academic Reading passage exploring the history of tea.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="a brief history of humans and food test 3" href="TEST%203%20A%20BRIEF%20HISTORY%20OF%20HUMANS%20AND%20FOOD.html" target="_blank" rel="noopener" style="--glow:rgba(234,88,12,0.28)">
+          <div class="card-top"><span class="tag">TEST 3</span><span class="icon-badge" style="background:rgba(234,88,12,0.13); color:#ea580c;"><i class="fa-solid fa-utensils"></i></span></div>
+          <h3>A Brief History of Humans and Food</h3>
+          <p>An IELTS Academic Reading passage exploring humans and food.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of the poster test 4" href="TEST%204%20THE%20HISTORY%20OF%20THE%20POSTER.html" target="_blank" rel="noopener" style="--glow:rgba(124,58,237,0.28)">
+          <div class="card-top"><span class="tag">TEST 4</span><span class="icon-badge" style="background:rgba(124,58,237,0.13); color:#7c3aed;"><i class="fa-solid fa-image"></i></span></div>
+          <h3>The History of the Poster</h3>
+          <p>An IELTS Academic Reading passage exploring the history of the poster.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of glass test 5" href="TEST%205%20HISTORY%20OF%20GLASS.html" target="_blank" rel="noopener" style="--glow:rgba(8,145,178,0.28)">
+          <div class="card-top"><span class="tag">TEST 5</span><span class="icon-badge" style="background:rgba(8,145,178,0.13); color:#0891b2;"><i class="fa-solid fa-wine-glass"></i></span></div>
+          <h3>The History of Glass</h3>
+          <p>An IELTS Academic Reading passage exploring the history of glass.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of the picnic test 6" href="TEST%206%20THE%20HISTORY%20OF%20THE%20PICNIC.html" target="_blank" rel="noopener" style="--glow:rgba(220,38,38,0.28)">
+          <div class="card-top"><span class="tag">TEST 6</span><span class="icon-badge" style="background:rgba(220,38,38,0.13); color:#dc2626;"><i class="fa-solid fa-basket-shopping"></i></span></div>
+          <h3>The History of the Picnic</h3>
+          <p>An IELTS Academic Reading passage exploring the history of the picnic.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of bicycles test 7" href="TEST%207%20HISTORY%20OF%20BICYCLES.html" target="_blank" rel="noopener" style="--glow:rgba(37,99,235,0.28)">
+          <div class="card-top"><span class="tag">TEST 7</span><span class="icon-badge" style="background:rgba(37,99,235,0.13); color:#2563eb;"><i class="fa-solid fa-bicycle"></i></span></div>
+          <h3>The History of Bicycles</h3>
+          <p>An IELTS Academic Reading passage exploring the history of bicycles.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of the guitar test 8" href="TEST%208%20THE%20HISTORY%20OF%20THE%20GUITAR.html" target="_blank" rel="noopener" style="--glow:rgba(180,83,9,0.28)">
+          <div class="card-top"><span class="tag">TEST 8</span><span class="icon-badge" style="background:rgba(180,83,9,0.13); color:#b45309;"><i class="fa-solid fa-guitar"></i></span></div>
+          <h3>The History of the Guitar</h3>
+          <p>An IELTS Academic Reading passage exploring the history of the guitar.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of the chicken test 9" href="TEST%209%20THE%20HISTORY%20OF%20THE%20CHICKEN.html" target="_blank" rel="noopener" style="--glow:rgba(202,138,4,0.28)">
+          <div class="card-top"><span class="tag">TEST 9</span><span class="icon-badge" style="background:rgba(202,138,4,0.13); color:#ca8a04;"><i class="fa-solid fa-drumstick-bite"></i></span></div>
+          <h3>The History of the Chicken</h3>
+          <p>An IELTS Academic Reading passage exploring the history of the chicken.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of cakes at weddings test 10" href="TEST%2010%20THE%20HISTORY%20OF%20CAKES%20AT%20WEDDING.html" target="_blank" rel="noopener" style="--glow:rgba(219,39,119,0.28)">
+          <div class="card-top"><span class="tag">TEST 10</span><span class="icon-badge" style="background:rgba(219,39,119,0.13); color:#db2777;"><i class="fa-solid fa-cake-candles"></i></span></div>
+          <h3>The History of Cakes at Weddings</h3>
+          <p>An IELTS Academic Reading passage exploring cakes at weddings.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the early history of scott and bownie's cod liver oil test 11" href="TEST%2011%20THE%20EARLY%20HISTORY%20OF%20SCOTT%20AND%20BOWNIE%27S%20COD%20LIVER%20OIL.html" target="_blank" rel="noopener" style="--glow:rgba(13,148,136,0.28)">
+          <div class="card-top"><span class="tag">TEST 11</span><span class="icon-badge" style="background:rgba(13,148,136,0.13); color:#0d9488;"><i class="fa-solid fa-fish"></i></span></div>
+          <h3>The Early History of Scott and Bownie's Cod Liver Oil</h3>
+          <p>An IELTS Academic Reading passage on Scott and Bownie's Cod Liver Oil.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of the globe theatre test 12" href="TEST%2012%20THE%20HISTORY%20OF%20THE%20GLOBE%20THEATRE.html" target="_blank" rel="noopener" style="--glow:rgba(159,18,57,0.28)">
+          <div class="card-top"><span class="tag">TEST 12</span><span class="icon-badge" style="background:rgba(159,18,57,0.13); color:#9f1239;"><i class="fa-solid fa-masks-theater"></i></span></div>
+          <h3>The History of the Globe Theatre</h3>
+          <p>An IELTS Academic Reading passage exploring the Globe Theatre.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of dolls test 13" href="TEST%2013%20THE%20HISTORY%20OF%20DOLLS.html" target="_blank" rel="noopener" style="--glow:rgba(225,29,72,0.28)">
+          <div class="card-top"><span class="tag">TEST 13</span><span class="icon-badge" style="background:rgba(225,29,72,0.13); color:#e11d48;"><i class="fa-solid fa-teddy-bear"></i></span></div>
+          <h3>The History of Dolls</h3>
+          <p>An IELTS Academic Reading passage exploring the history of dolls.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of building telegraph lines test 14" href="TEST%2014%20THE%20HISTORY%20OF%20BUILDING%20TELEGRAPH%20LINES.html" target="_blank" rel="noopener" style="--glow:rgba(71,85,105,0.28)">
+          <div class="card-top"><span class="tag">TEST 14</span><span class="icon-badge" style="background:rgba(71,85,105,0.13); color:#475569;"><i class="fa-solid fa-tower-broadcast"></i></span></div>
+          <h3>The History of Building Telegraph Lines</h3>
+          <p>An IELTS Academic Reading passage exploring telegraph lines.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history impact of the potato test 15" href="TEST%2015%20THE%20HISTORY%20%28IMPACT%29%20OF%20THE%20POTATO.html" target="_blank" rel="noopener" style="--glow:rgba(161,98,7,0.28)">
+          <div class="card-top"><span class="tag">TEST 15</span><span class="icon-badge" style="background:rgba(161,98,7,0.13); color:#a16207;"><i class="fa-solid fa-carrot"></i></span></div>
+          <h3>The History (Impact) of the Potato</h3>
+          <p>An IELTS Academic Reading passage exploring the impact of the potato.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of american dance test 16" href="TEST%2016%20THE%20HISTORY%20OF%20AMERICAN%20DANCE.html" target="_blank" rel="noopener" style="--glow:rgba(139,92,246,0.28)">
+          <div class="card-top"><span class="tag">TEST 16</span><span class="icon-badge" style="background:rgba(139,92,246,0.13); color:#8b5cf6;"><i class="fa-solid fa-music"></i></span></div>
+          <h3>The History of American Dance</h3>
+          <p>An IELTS Academic Reading passage exploring American dance.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of salt test 17" href="TEST%2017%20THE%20HISTORY%20OF%20SALT.html" target="_blank" rel="noopener" style="--glow:rgba(100,116,139,0.28)">
+          <div class="card-top"><span class="tag">TEST 17</span><span class="icon-badge" style="background:rgba(100,116,139,0.13); color:#64748b;"><i class="fa-solid fa-cube"></i></span></div>
+          <h3>The History of Salt</h3>
+          <p>An IELTS Academic Reading passage exploring the history of salt.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="a brief history of rubber test 18" href="TEST%2018%20A%20BRIEF%20HISTORY%20OF%20RUBBER.html" target="_blank" rel="noopener" style="--glow:rgba(21,128,61,0.28)">
+          <div class="card-top"><span class="tag">TEST 18</span><span class="icon-badge" style="background:rgba(21,128,61,0.13); color:#15803d;"><i class="fa-solid fa-basketball"></i></span></div>
+          <h3>A Brief History of Rubber</h3>
+          <p>An IELTS Academic Reading passage exploring the history of rubber.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the cacao a sweet history test 19" href="TEST%2019%20THE%20CACAO%20A%20SWEET%20HISTORY.html" target="_blank" rel="noopener" style="--glow:rgba(120,53,15,0.28)">
+          <div class="card-top"><span class="tag">TEST 19</span><span class="icon-badge" style="background:rgba(120,53,15,0.13); color:#78350f;"><i class="fa-solid fa-cookie-bite"></i></span></div>
+          <h3>The Cacao: A Sweet History</h3>
+          <p>An IELTS Academic Reading passage exploring the history of cacao.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of the tortoise test 20" href="TEST%2020%20THE%20HISTORY%20OF%20THE%20TORTOISE.html" target="_blank" rel="noopener" style="--glow:rgba(77,124,15,0.28)">
+          <div class="card-top"><span class="tag">TEST 20</span><span class="icon-badge" style="background:rgba(77,124,15,0.13); color:#4d7c0f;"><i class="fa-solid fa-hourglass-half"></i></span></div>
+          <h3>The History of the Tortoise</h3>
+          <p>An IELTS Academic Reading passage exploring the history of the tortoise.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="a history of fingerprinting test 21" href="TEST%2021%20A%20HISTORY%20OF%20FINGERPRINTING.html" target="_blank" rel="noopener" style="--glow:rgba(67,56,202,0.28)">
+          <div class="card-top"><span class="tag">TEST 21</span><span class="icon-badge" style="background:rgba(67,56,202,0.13); color:#4338ca;"><i class="fa-solid fa-fingerprint"></i></span></div>
+          <h3>A History of Fingerprinting</h3>
+          <p>An IELTS Academic Reading passage exploring the history of fingerprinting.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the can a brief history lesson test 22" href="TEST%2022%20THE%20CAN%20A%20BRIEF%20HISTORY%20LESSON.html" target="_blank" rel="noopener" style="--glow:rgba(82,82,91,0.28)">
+          <div class="card-top"><span class="tag">TEST 22</span><span class="icon-badge" style="background:rgba(82,82,91,0.13); color:#52525b;"><i class="fa-solid fa-recycle"></i></span></div>
+          <h3>The Can: A Brief History Lesson</h3>
+          <p>An IELTS Academic Reading passage exploring the history of the can.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of the invention of plastic test 23" href="TEST%2023%20THE%20HISTORY%20OF%20THE%20INVENTION%20OF%20PLASTIC.html" target="_blank" rel="noopener" style="--glow:rgba(29,78,216,0.28)">
+          <div class="card-top"><span class="tag">TEST 23</span><span class="icon-badge" style="background:rgba(29,78,216,0.13); color:#1d4ed8;"><i class="fa-solid fa-flask"></i></span></div>
+          <h3>The History of the Invention of Plastic</h3>
+          <p>An IELTS Academic Reading passage exploring the invention of plastic.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <a class="card" data-title="the history of ice cream test 24" href="TEST%2024%20THE%20HISTORY%20OF%20ICE%20CREAM.html" target="_blank" rel="noopener" style="--glow:rgba(236,72,153,0.28)">
+          <div class="card-top"><span class="tag">TEST 24</span><span class="icon-badge" style="background:rgba(236,72,153,0.13); color:#ec4899;"><i class="fa-solid fa-ice-cream"></i></span></div>
+          <h3>The History of Ice Cream</h3>
+          <p>An IELTS Academic Reading passage exploring the history of ice cream.</p>
+          <div class="meta"><span><i class="fa-regular fa-clock"></i>20 min</span><span><i class="fa-regular fa-circle-question"></i>13 questions</span></div>
+          <span class="go">Start test <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+      </div>
+      <div class="empty" id="empty"><i class="fa-solid fa-box-open"></i>No tests match your search.</div>
+    </main>
+
+    <footer>
+      Built for <a href="https://t.me/IELTSWITHSPAXCE" target="_blank" rel="noopener">@IELTSWITHSPAXCE</a> · IELTS Academic Reading Practice
+    </footer>
+  </div>
+
+<script>
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+  var searchEl = document.getElementById('search');
+  var countEl = document.getElementById('count');
+  var emptyEl = document.getElementById('empty');
+
+  function applyFilter(){
+    var q = searchEl.value.trim().toLowerCase();
+    var visible = 0;
+    cards.forEach(function(card){
+      var match = card.getAttribute('data-title').indexOf(q) !== -1;
+      card.classList.toggle('is-hidden', !match);
+      if (match) visible++;
+    });
+    countEl.textContent = visible;
+    emptyEl.classList.toggle('is-visible', visible === 0);
+  }
+
+  searchEl.addEventListener('input', applyFilter);
+
+  document.getElementById('surprise').addEventListener('click', function(){
+    var visibleCards = cards.filter(function(c){ return !c.classList.contains('is-hidden'); });
+    var pool = visibleCards.length ? visibleCards : cards;
+    var pick = pool[Math.floor(Math.random() * pool.length)];
+    window.open(pick.getAttribute('href'), '_blank');
+  });
+</script>
+</body>
+</html>
